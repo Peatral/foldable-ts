@@ -1,7 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { subscribeToPosture, subscribeToResize, segmentsEqual, getViewportSegments, FALLBACK_VIEWPORT_SEGMENTS } from '@foldable-ts/utils';
-
-let cachedSegments: DOMRect[] = FALLBACK_VIEWPORT_SEGMENTS;
+import { subscribeToPosture, subscribeToResize, getViewportSegments, FALLBACK_VIEWPORT_SEGMENTS } from '@foldable-ts/utils';
 
 const listeners = new Set<() => void>();
 
@@ -36,22 +34,7 @@ function subscribeToSegments(onStoreChange: () => void): () => void {
 }
 
 function getSnapshot(): DOMRect[] {
-  const currentSegments = getViewportSegments();
-
-  if (!currentSegments || currentSegments.length === 0) {
-    return FALLBACK_VIEWPORT_SEGMENTS;
-  }
-
-  const isSame = 
-    cachedSegments !== FALLBACK_VIEWPORT_SEGMENTS &&
-    segmentsEqual(cachedSegments, currentSegments);
-
-  if (isSame) {
-    return cachedSegments;
-  }
-
-  cachedSegments = currentSegments;
-  return cachedSegments;
+  return getViewportSegments();
 }
 
 function getServerSnapshot(): DOMRect[] {

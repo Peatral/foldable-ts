@@ -3,12 +3,17 @@ import type { DevicePostureType } from '@foldable-ts/types';
 export const FALLBACK_DEVICE_POSTURE: DevicePostureType = 'continuous';
 export const FALLBACK_VIEWPORT_SEGMENTS: DOMRect[] = [];
 
+let cachedSegments: DOMRect[] = FALLBACK_VIEWPORT_SEGMENTS;
+
 export function getViewportSegments(): DOMRect[] {
-  if (window.viewport?.segments) {
-    return window.viewport.segments;
+  const current = window.viewport?.segments || [new DOMRect(0, 0, window.innerWidth, window.innerHeight)];
+
+  if (segmentsEqual(cachedSegments, current)) {
+    return cachedSegments;
   }
 
-  return [new DOMRect(0, 0, window.innerWidth, window.innerHeight)];
+  cachedSegments = current;
+  return cachedSegments;
 }
 
 export function getDevicePosture(): DevicePostureType {
