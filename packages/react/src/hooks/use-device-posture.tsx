@@ -15,5 +15,5 @@ export function useDevicePosture() {
     subscribeToPosture,
     getSnapshot,
     getServerSnapshot,
-  )
+  );
 }

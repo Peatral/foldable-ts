@@ -17,3 +17,23 @@ export function subscribeToResize(onStoreChange: () => void): () => void {
     window.removeEventListener('resize', onStoreChange);
   };
 }
+
+export function subscribeToViewportSegments(callback: () => void, debounceMs: number = 50): () => void {
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  const handleGlobalChange = () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback();
+    }, debounceMs);
+  };
+
+  const unsubResize = subscribeToResize(handleGlobalChange);
+  const unsubPosture = subscribeToPosture(handleGlobalChange);
+
+  return () => {
+    clearTimeout(timeoutId);
+    unsubResize();
+    unsubPosture();
+  };
+}

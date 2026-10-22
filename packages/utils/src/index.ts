@@ -1,4 +1,8 @@
-import { subscribeToPosture, subscribeToResize } from './events';
+import {
+  subscribeToPosture,
+  subscribeToResize,
+  subscribeToViewportSegments,
+} from './events';
 import {
   segmentsEqual,
   getDevicePosture,
@@ -10,6 +14,7 @@ import {
 export {
   subscribeToPosture,
   subscribeToResize,
+  subscribeToViewportSegments,
   segmentsEqual,
   getDevicePosture,
   getViewportSegments,

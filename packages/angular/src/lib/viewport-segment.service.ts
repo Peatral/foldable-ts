@@ -1,7 +1,14 @@
-import { Injectable, Signal } from '@angular/core';
+import { inject, Injectable, InjectionToken, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, merge, debounceTime, map, distinctUntilChanged, startWith, shareReplay } from 'rxjs';
-import { subscribeToPosture, subscribeToResize, segmentsEqual, FALLBACK_VIEWPORT_SEGMENTS, getViewportSegments } from '@foldable-ts/utils';
+import { Observable, map, distinctUntilChanged, startWith, shareReplay } from 'rxjs';
+import { subscribeToViewportSegments, segmentsEqual, FALLBACK_VIEWPORT_SEGMENTS, getViewportSegments } from '@foldable-ts/utils';
+
+
+export const VIEWPORT_SEGMENTS_DEBOUNCE = new InjectionToken<number | undefined>('VIEWPORT_SEGMENTS_DEBOUNCE', {
+  providedIn: 'root',
+  factory: () => undefined,
+});
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +18,14 @@ export class ViewportSegmentsService {
   public readonly segments: Signal<DOMRect[]>;
 
   constructor() {
-    const resize$ = new Observable<void>(observer => {
-      return subscribeToResize(() => observer.next());
+    const debounceMs = inject(VIEWPORT_SEGMENTS_DEBOUNCE);
+
+    const segments$ = new Observable<void>(observer => {
+      return subscribeToViewportSegments(() => observer.next(), debounceMs);
     });
 
-    const posture$ = new Observable<void>(observer => {
-      return subscribeToPosture(() => observer.next());
-    });
-
-    this.segments$ = merge(resize$, posture$).pipe(
+    this.segments$ = segments$.pipe(
       startWith(undefined),
-      debounceTime(50),
       map(() => getViewportSegments()),
       distinctUntilChanged(segmentsEqual),
       shareReplay({ bufferSize: 1, refCount: true })
