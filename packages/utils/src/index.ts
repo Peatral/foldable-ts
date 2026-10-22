@@ -1,5 +1,3 @@
-import type {} from '@foldable-ts/types';
-
 import { subscribeToPosture, subscribeToResize } from './events';
 import {
   segmentsEqual,

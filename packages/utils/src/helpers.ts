@@ -1,3 +1,5 @@
+import type { DevicePostureType } from '@foldable-ts/types';
+
 export const FALLBACK_DEVICE_POSTURE: DevicePostureType = 'continuous';
 export const FALLBACK_VIEWPORT_SEGMENTS: DOMRect[] = [];
 

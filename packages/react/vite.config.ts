@@ -22,6 +22,6 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    dts()
+    dts({ rollupTypes: true })
   ]
 });

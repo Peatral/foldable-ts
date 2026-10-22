@@ -9,7 +9,6 @@
   },
   "peerDependencies": {
     "@angular/core": ">=16.0.0",
-    "@foldable-ts/types": "workspace:*",
     "@foldable-ts/utils": "workspace:*",
     "rxjs": "^7.8.2"
   }

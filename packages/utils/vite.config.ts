@@ -4,9 +4,11 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: {
+        index: 'src/index.ts',
+        types: 'src/types.ts'
+      },
       name: 'FoldableTsUtils',
-      fileName: 'index',
       formats: ['es', 'cjs']
     },
     rollupOptions: {
@@ -14,6 +16,6 @@ export default defineConfig({
     }
   },
   plugins: [
-    dts()
+    dts({ rollupTypes: true })
   ]
 });
