@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES2022",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "lib": ["DOM", "ES2022"]
+  },
+  "angularCompilerOptions": {
+    "compilationMode": "partial",
+    "strictTemplates": true
+  },
+  "include": ["src/**/*.ts"]
+}
