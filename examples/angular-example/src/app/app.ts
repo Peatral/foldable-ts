@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { DevicePostureService, ViewportSegmentsService } from '@foldable-ts/angular';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, JsonPipe],
   template: `
     <div class="app">
       <div class="info-panel">
