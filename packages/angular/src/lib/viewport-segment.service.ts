@@ -1,9 +1,7 @@
 import { Injectable, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, merge, debounceTime, map, distinctUntilChanged, startWith, shareReplay } from 'rxjs';
-import { subscribeToPosture, subscribeToResize, segmentsEqual } from '@foldable-ts/utils';
-
-const FALLBACK: DOMRect[] = [];
+import { subscribeToPosture, subscribeToResize, segmentsEqual, FALLBACK_VIEWPORT_SEGMENTS, getViewportSegments } from '@foldable-ts/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -24,14 +22,11 @@ export class ViewportSegmentsService {
     this.segments$ = merge(resize$, posture$).pipe(
       startWith(undefined),
       debounceTime(50),
-      map(() => {
-        const current = window.viewport?.segments;
-        return (!current || current.length === 0) ? FALLBACK : current;
-      }),
+      map(() => getViewportSegments()),
       distinctUntilChanged(segmentsEqual),
       shareReplay({ bufferSize: 1, refCount: true })
     );
 
-    this.segments = toSignal(this.segments$, { initialValue: FALLBACK });
+    this.segments = toSignal(this.segments$, { initialValue: FALLBACK_VIEWPORT_SEGMENTS });
   }
 }

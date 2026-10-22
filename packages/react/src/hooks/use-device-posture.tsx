@@ -1,14 +1,12 @@
 import { useSyncExternalStore } from 'react';
-import { subscribeToPosture } from '@foldable-ts/utils';
-
-const FALLBACK: DevicePostureType = 'continuous';
+import { FALLBACK_DEVICE_POSTURE, getDevicePosture, subscribeToPosture } from '@foldable-ts/utils';
 
 function getSnapshot(): DevicePostureType {
-  return navigator.devicePosture?.type || FALLBACK;
+  return getDevicePosture();
 }
 
 function getServerSnapshot(): DevicePostureType {
-  return FALLBACK;
+  return FALLBACK_DEVICE_POSTURE;
 }
 
 export function useDevicePosture() {
