@@ -18,16 +18,17 @@ import { DevicePostureService, ViewportSegmentsService } from '@foldable-ts/angu
       </div>
 
       <div class="segments-container">
-        <div
-          *ngFor="let rect of segments(); let i = index"
-          class="segment-visual"
-          [style.left.px]="rect.left"
-          [style.top.px]="rect.top"
-          [style.width.px]="rect.width"
-          [style.height.px]="rect.height"
-        >
-          Segment {{ i + 1 }}
-        </div>
+        @for (rect of segments(); track $index; let i = $index) {
+          <div
+            class="segment-visual"
+            [style.left.px]="rect.left"
+            [style.top.px]="rect.top"
+            [style.width.px]="rect.width"
+            [style.height.px]="rect.height"
+          >
+            Segment {{ i + 1 }}
+          </div>
+        }
       </div>
     </div>
 
