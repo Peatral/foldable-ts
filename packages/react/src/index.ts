@@ -1,4 +1,4 @@
-/// <reference types='@foldable-ts/types' />
+import type {} from '@foldable-ts/types';
 
 import { useViewportSegments } from './hooks/use-viewport-segments';
 import { useDevicePosture } from './hooks/use-device-posture';

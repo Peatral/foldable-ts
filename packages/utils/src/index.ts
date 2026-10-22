@@ -1,4 +1,4 @@
-/// <reference types="@foldable-ts/types" />
+import type {} from '@foldable-ts/types';
 
 import { subscribeToPosture, subscribeToResize } from './events';
 import {
