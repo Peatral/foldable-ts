@@ -1,20 +1,20 @@
-export function subscribeToPosture(onStoreChange: () => void): () => void {
+export function subscribeToPosture(callback: () => void): () => void {
   if (navigator.devicePosture) {
-    navigator.devicePosture.addEventListener('change', onStoreChange);
+    navigator.devicePosture.addEventListener('change', callback);
   }
 
   return () => {
     if (navigator.devicePosture) {
-      navigator.devicePosture.removeEventListener('change', onStoreChange);
+      navigator.devicePosture.removeEventListener('change', callback);
     }
   };
 }
 
-export function subscribeToResize(onStoreChange: () => void): () => void {
-  window.addEventListener('resize', onStoreChange);
+export function subscribeToResize(callback: () => void): () => void {
+  window.addEventListener('resize', callback);
 
   return () => {
-    window.removeEventListener('resize', onStoreChange);
+    window.removeEventListener('resize', callback);
   };
 }
 
